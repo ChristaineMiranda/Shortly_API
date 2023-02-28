@@ -27,7 +27,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.sessions (
     id integer NOT NULL,
     token text NOT NULL,
-    "createdAt" date DEFAULT now() NOT NULL
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -58,7 +58,8 @@ ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
 CREATE TABLE public.sessions_users (
     id integer NOT NULL,
     id_session integer NOT NULL,
-    id_user integer NOT NULL
+    id_user integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -91,7 +92,7 @@ CREATE TABLE public.urls (
     url text NOT NULL,
     short_url text NOT NULL,
     visit_count integer DEFAULT 0 NOT NULL,
-    "createdAt" date DEFAULT now() NOT NULL
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -121,12 +122,12 @@ ALTER SEQUENCE public.urls_id_seq OWNED BY public.urls.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    name text NOT NULL,
-    email text NOT NULL,
+    name character varying(80) NOT NULL,
+    email character varying(80) NOT NULL,
     password text NOT NULL,
     visit_total integer DEFAULT 0 NOT NULL,
     link_total integer DEFAULT 0 NOT NULL,
-    "createdAt" date DEFAULT now() NOT NULL
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -157,7 +158,8 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 CREATE TABLE public.users_urls (
     id integer NOT NULL,
     id_user integer NOT NULL,
-    id_url integer NOT NULL
+    id_url integer NOT NULL,
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
 );
 
 
@@ -220,12 +222,16 @@ ALTER TABLE ONLY public.users_urls ALTER COLUMN id SET DEFAULT nextval('public.u
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (1, '59450fe5-44ad-4b1f-acca-845a0bc3aeb7', '2023-02-28 10:45:55.151038');
+INSERT INTO public.sessions VALUES (2, 'c84f49d2-0672-4a07-90fc-2b3a3e12bd3c', '2023-02-28 10:55:58.180528');
 
 
 --
 -- Data for Name: sessions_users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions_users VALUES (1, 1, 1, '2023-02-28 10:45:55.152866');
+INSERT INTO public.sessions_users VALUES (2, 2, 2, '2023-02-28 10:55:58.189166');
 
 
 --
@@ -238,8 +244,8 @@ ALTER TABLE ONLY public.users_urls ALTER COLUMN id SET DEFAULT nextval('public.u
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'Patricio', 'patricio@email.com', 'senha', 0, 0, '2023-02-26');
-INSERT INTO public.users VALUES (2, 'Moccha', 'moccha@email.com', '$2b$10$TD8EvEoZ.1972y/4oIWVo.5CYugvwy8VckHemTnjmlD25BlcQeCqW', 0, 0, '2023-02-26');
+INSERT INTO public.users VALUES (1, 'Christaine', 'christaine@email.com', '$2b$10$dqJs0FfY8QnNYclj1dZPAu0SDYThlM/DN2DRDswc.z6W6mPoY1wSO', 0, 0, '2023-02-28 10:45:05.571935');
+INSERT INTO public.users VALUES (2, 'Larissa', 'larissa@email.com', '$2b$10$78YmTTW08ByVHM.vJwOLe.8Jc0e2VPKHWP/fOfI7bO/eZLnpnd5mW', 0, 0, '2023-02-28 10:55:43.322218');
 
 
 --
@@ -252,14 +258,14 @@ INSERT INTO public.users VALUES (2, 'Moccha', 'moccha@email.com', '$2b$10$TD8EvE
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
 
 
 --
 -- Name: sessions_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_users_id_seq', 2, true);
 
 
 --
