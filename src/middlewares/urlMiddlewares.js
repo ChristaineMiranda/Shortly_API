@@ -17,7 +17,7 @@ export async function checkUrl (req, res, next){
     token = token.replace("Bearer", "");
    
     try {
-       const record = await db.query(`SELECT * FROM sessions JOIN sessions_users ON sessions.id = sessions_users.id_session WHERE token = $1;`, [token]);
+       const record = await db.query(`SELECT * FROM sessions WHERE token = $1;`, [token]);
        if(!record.rowCount){
         return res.sendStatus(401);
        }
@@ -26,8 +26,10 @@ export async function checkUrl (req, res, next){
        if(urlExists.rowCount){
         return res.sendStatus(422);
        }
+       const user = await db.query(`SELECT * FROM sessions_users JOIN sessions ON sessions_users.id_session = sessions.id WHERE sessions.token = $1;`, [token]);
 
-       res.locals.user = record.rows[0].id_user;
+
+       res.locals.user = user.rows[0].id_user;
        next();
 
     } catch (error) {
