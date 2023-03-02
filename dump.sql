@@ -224,6 +224,7 @@ ALTER TABLE ONLY public.users_urls ALTER COLUMN id SET DEFAULT nextval('public.u
 
 INSERT INTO public.sessions VALUES (1, '59450fe5-44ad-4b1f-acca-845a0bc3aeb7', '2023-02-28 10:45:55.151038');
 INSERT INTO public.sessions VALUES (2, 'c84f49d2-0672-4a07-90fc-2b3a3e12bd3c', '2023-02-28 10:55:58.180528');
+INSERT INTO public.sessions VALUES (3, 'd2fd0f77-d8cb-4fe6-8d2b-2a3077a5518c', '2023-02-28 11:20:13.343515');
 
 
 --
@@ -232,12 +233,15 @@ INSERT INTO public.sessions VALUES (2, 'c84f49d2-0672-4a07-90fc-2b3a3e12bd3c', '
 
 INSERT INTO public.sessions_users VALUES (1, 1, 1, '2023-02-28 10:45:55.152866');
 INSERT INTO public.sessions_users VALUES (2, 2, 2, '2023-02-28 10:55:58.189166');
+INSERT INTO public.sessions_users VALUES (3, 3, 3, '2023-02-28 11:20:13.348204');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 'esse é um link muito longo', 'GRr7RLsmJc1QWBF90CVaE', 0, '2023-03-02 13:55:39.562069');
+INSERT INTO public.urls VALUES (2, 'segundo link deste usuario', 'nWrO5npKb4eNB87LgiCMK', 0, '2023-03-02 13:55:59.978677');
 
 
 --
@@ -246,47 +250,50 @@ INSERT INTO public.sessions_users VALUES (2, 2, 2, '2023-02-28 10:55:58.189166')
 
 INSERT INTO public.users VALUES (1, 'Christaine', 'christaine@email.com', '$2b$10$dqJs0FfY8QnNYclj1dZPAu0SDYThlM/DN2DRDswc.z6W6mPoY1wSO', 0, 0, '2023-02-28 10:45:05.571935');
 INSERT INTO public.users VALUES (2, 'Larissa', 'larissa@email.com', '$2b$10$78YmTTW08ByVHM.vJwOLe.8Jc0e2VPKHWP/fOfI7bO/eZLnpnd5mW', 0, 0, '2023-02-28 10:55:43.322218');
+INSERT INTO public.users VALUES (3, 'Julya', 'julya@email.com', '$2b$10$e7LgTiCEHYCSrwrK0NEQCuJYj5TPfAqxpXVf19h/361UKhuB7Hwwu', 0, 0, '2023-02-28 11:19:55.431875');
 
 
 --
 -- Data for Name: users_urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users_urls VALUES (1, 3, 1, '2023-03-02 13:55:39.56725');
+INSERT INTO public.users_urls VALUES (2, 3, 2, '2023-03-02 13:55:59.980311');
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sessions_id_seq', 3, true);
 
 
 --
 -- Name: sessions_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_users_id_seq', 2, true);
+SELECT pg_catalog.setval('public.sessions_users_id_seq', 3, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 2, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 2, true);
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 
 --
 -- Name: users_urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_urls_id_seq', 2, true);
 
 
 --

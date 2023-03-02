@@ -29,9 +29,10 @@ export async function signIn(req, res){
             return res.status(200).send(session.rows[0].token);
         }
 
-        const token = uuid();
-        await db.query(`INSERT INTO sessions (token) VALUES ($1);`, [token]);
-        const newSession = await db.query(`SELECT id FROM sessions WHERE token = $1;`, [token]);
+        const stringToken = uuid();
+        const token = { token: stringToken };
+        await db.query(`INSERT INTO sessions (token) VALUES ($1);`, [stringToken]);
+        const newSession = await db.query(`SELECT id FROM sessions WHERE token = $1;`, [stringToken]);
         await db.query(`INSERT INTO sessions_users (id_session, id_user) VALUES ($1, $2);`, [newSession.rows[0].id, id]);
         res.status(200).send(token);
         
