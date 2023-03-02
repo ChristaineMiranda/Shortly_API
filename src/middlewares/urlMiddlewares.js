@@ -2,7 +2,7 @@ import db from '../config/database.js';
 import {urlSchema} from '../schemas/urlSchema.js';
 
 export async function checkUrl (req, res, next){
-    let {token} = req.headers; 
+    let token = req.headers.authorization; 
     const data = req.body;
 
     if(!token) return res.sendStatus(401);
@@ -32,3 +32,5 @@ export async function checkUrl (req, res, next){
         res.status(500).send(error.message);
     }
 }
+
+

@@ -240,8 +240,7 @@ INSERT INTO public.sessions_users VALUES (3, 3, 3, '2023-02-28 11:20:13.348204')
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.urls VALUES (1, 'esse é um link muito longo', 'GRr7RLsmJc1QWBF90CVaE', 0, '2023-03-02 13:55:39.562069');
-INSERT INTO public.urls VALUES (2, 'segundo link deste usuario', 'nWrO5npKb4eNB87LgiCMK', 0, '2023-03-02 13:55:59.978677');
+INSERT INTO public.urls VALUES (5, 'https://pt.wikipedia.org/wiki/C%C3%A3o', 'HNkyMURMLqG3AtQRORiok', 1, '2023-03-02 16:41:31.654418');
 
 
 --
@@ -257,8 +256,7 @@ INSERT INTO public.users VALUES (3, 'Julya', 'julya@email.com', '$2b$10$e7LgTiCE
 -- Data for Name: users_urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users_urls VALUES (1, 3, 1, '2023-03-02 13:55:39.56725');
-INSERT INTO public.users_urls VALUES (2, 3, 2, '2023-03-02 13:55:59.980311');
+INSERT INTO public.users_urls VALUES (5, 1, 5, '2023-03-02 16:41:31.658578');
 
 
 --
@@ -279,7 +277,7 @@ SELECT pg_catalog.setval('public.sessions_users_id_seq', 3, true);
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 2, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 5, true);
 
 
 --
@@ -293,7 +291,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 -- Name: users_urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_urls_id_seq', 2, true);
+SELECT pg_catalog.setval('public.users_urls_id_seq', 5, true);
 
 
 --
