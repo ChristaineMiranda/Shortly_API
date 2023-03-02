@@ -4,6 +4,7 @@ import {urlSchema} from '../schemas/urlSchema.js';
 export async function checkUrl (req, res, next){
     let token = req.headers.authorization; 
     const data = req.body;
+    
 
     if(!token) return res.sendStatus(401);
 
@@ -14,10 +15,11 @@ export async function checkUrl (req, res, next){
     }
 
     token = token.replace("Bearer", "");
+   
     try {
-       const record = await db.query(`SELECT sessions.token, sessions_users.id_user FROM sessions JOIN sessions_users ON sessions.id = sessions_users.id_session WHERE token = $1;`, [token]);
+       const record = await db.query(`SELECT * FROM sessions JOIN sessions_users ON sessions.id = sessions_users.id_session WHERE token = $1;`, [token]);
        if(!record.rowCount){
-        return res.sendStatus(404);
+        return res.sendStatus(401);
        }
 
        const urlExists = await db.query(`SELECT * FROM urls WHERE url = $1;`, [data.url]);
