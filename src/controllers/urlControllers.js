@@ -4,17 +4,13 @@ import { nanoid } from 'nanoid';
 export async function shortener(req, res) {
     const { url } = req.body;
     const shortenedLink = nanoid();
-    let token = req.headers.authorization
-    token = token.replace("Bearer", "");
-
 
     try {
         await db.query(`INSERT INTO urls (url, short_url) VALUES ($1, $2);`, [url, shortenedLink]);
         const newURL = await db.query(`SELECT id FROM urls WHERE url = $1;`, [url]);
-        const idUser = await db.query(`SELECT * FROM sessions_users JOIN sessions ON sessions_users.id_session = sessions.id WHERE token = $1;`, [token])
-        await db.query(`INSERT INTO users_urls (id_user, id_url) VALUES ($1, $2);`, [idUser.rows[0].id_user, newURL.rows[0].id]);
+        await db.query(`INSERT INTO users_urls (id_user, id_url) VALUES ($1, $2);`, [res.locals.user, newURL.rows[0].id]);
         const toSend = { id: newURL.rows[0].id, shortUrl: shortenedLink };
-
+        
 
         res.status(201).send(toSend);
 
