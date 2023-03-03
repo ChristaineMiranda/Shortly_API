@@ -10,7 +10,7 @@ export async function shortener(req, res) {
         const newURL = await db.query(`SELECT id FROM urls WHERE url = $1;`, [url]);
         await db.query(`INSERT INTO users_urls (id_user, id_url) VALUES ($1, $2);`, [res.locals.user, newURL.rows[0].id]);
         const toSend = { id: newURL.rows[0].id, shortUrl: shortenedLink };
-        
+
         res.status(201).send(toSend);
 
     } catch (error) {
@@ -43,16 +43,27 @@ export async function redirect(req, res) {
     const { shortUrl } = req.params;
     try {
         const shortUrlExists = await db.query(`SELECT * FROM urls WHERE short_url = $1;`, [shortUrl]);
-        
+
         if (!shortUrlExists.rowCount) {
             return res.sendStatus(404);
         }
-        await db.query(`UPDATE urls SET visit_count = visit_count + 1 WHERE short_url = $1;`, [shortUrl])
-        const test = await db.query(`SELECT users_urls.id_user FROM urls JOIN users_urls ON urls.id = users_urls.id_url WHERE short_url = $1;`, [shortUrl])
-        await db.query(`UPDATE users SET visit_total = visit_total + 1 WHERE id = $1;`, [test.rows[0].id_user])
+        await db.query(`UPDATE urls SET visit_count = visit_count + 1 WHERE short_url = $1;`, [shortUrl]);
+        const dataUser = await db.query(`SELECT users_urls.id_user FROM urls JOIN users_urls ON urls.id = users_urls.id_url WHERE short_url = $1;`, [shortUrl]);
+        await db.query(`UPDATE users SET visit_total = visit_total + 1 WHERE id = $1;`, [dataUser.rows[0].id_user]);
         res.redirect(shortUrlExists.rows[0].url);
     } catch (error) {
         res.status(500).send(error.message);
     }
 
+}
+
+export async function deleteById(req, res) {
+    try {
+        await db.query(`DELETE FROM users_urls WHERE id_url = $1;`, [res.locals.urlId]);
+        await db.query(`DELETE FROM urls WHERE id = $1;`, [res.locals.urlId]);
+        res.sendStatus(204);
+
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 }

@@ -1,7 +1,7 @@
 import db from "../config/database.js";
 
 export async function dataUser(req, res) {
-    const id = res.locals.user
+    const id = res.locals.user;
     try {
         const data = await db.query(`SELECT users.id, users.name, users.visit_total AS "visitCount", json_agg(
             json_build_object(
