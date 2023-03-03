@@ -9,6 +9,7 @@ export async function shortener(req, res) {
         await db.query(`INSERT INTO urls (url, short_url) VALUES ($1, $2);`, [url, shortenedLink]);
         const newURL = await db.query(`SELECT id FROM urls WHERE url = $1;`, [url]);
         await db.query(`INSERT INTO users_urls (id_user, id_url) VALUES ($1, $2);`, [res.locals.user, newURL.rows[0].id]);
+        await db.query(`UPDATE users SET link_total = link_total + 1 WHERE id = $1;`, [res.locals.user]);
         const toSend = { id: newURL.rows[0].id, shortUrl: shortenedLink };
 
         res.status(201).send(toSend);
@@ -63,6 +64,15 @@ export async function deleteById(req, res) {
         await db.query(`DELETE FROM urls WHERE id = $1;`, [res.locals.urlId]);
         res.sendStatus(204);
 
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
+export async function ranking(req, res){
+    try {
+        const list = await db.query(`SELECT id, name, link_total AS "linksCount", visit_total AS "visitCount" FROM users ORDER BY visit_total DESC LIMIT 10;`);
+        res.status(200).send(list.rows);
     } catch (error) {
         res.status(500).send(error.message);
     }
