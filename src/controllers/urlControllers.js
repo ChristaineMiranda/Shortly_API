@@ -11,7 +11,6 @@ export async function shortener(req, res) {
         await db.query(`INSERT INTO users_urls (id_user, id_url) VALUES ($1, $2);`, [res.locals.user, newURL.rows[0].id]);
         const toSend = { id: newURL.rows[0].id, shortUrl: shortenedLink };
         
-
         res.status(201).send(toSend);
 
     } catch (error) {

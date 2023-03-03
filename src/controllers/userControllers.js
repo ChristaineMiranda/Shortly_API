@@ -10,7 +10,7 @@ export async function dataUser(req, res) {
                      'url', urls.url,
                      'visitCount', urls.visit_count
                  )
-        ) AS shortenedUrls FROM users JOIN users_urls ON users.id = users_urls.id_user JOIN urls ON users_urls.id_url = urls.id
+        ) AS "shortenedUrls" FROM users JOIN users_urls ON users.id = users_urls.id_user JOIN urls ON users_urls.id_url = urls.id
         WHERE users.id = $1 GROUP BY users.id;`, [id]);
         
         res.status(200).send(data.rows[0]);
